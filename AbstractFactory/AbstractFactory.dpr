@@ -1,3 +1,6 @@
+{******************************************************************************}
+{*           Delphi example using the Abstract Factory pattern                *}
+{******************************************************************************}
 program AbstractFactory;
 
 {$APPTYPE CONSOLE}
