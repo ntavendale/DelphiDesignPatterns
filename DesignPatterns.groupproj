@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4FADEADE-718D-45A7-B0A0-C7F3BF4C4FD2}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Decorator\decorator.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="AbstractFactory\AbstractFactory.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="decorator">
+        <MSBuild Projects="Decorator\decorator.dproj"/>
+    </Target>
+    <Target Name="decorator:Clean">
+        <MSBuild Projects="Decorator\decorator.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="decorator:Make">
+        <MSBuild Projects="Decorator\decorator.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AbstractFactory">
+        <MSBuild Projects="AbstractFactory\AbstractFactory.dproj"/>
+    </Target>
+    <Target Name="AbstractFactory:Clean">
+        <MSBuild Projects="AbstractFactory\AbstractFactory.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AbstractFactory:Make">
+        <MSBuild Projects="AbstractFactory\AbstractFactory.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="decorator;AbstractFactory"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="decorator:Make;AbstractFactory:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
