@@ -1,7 +1,7 @@
 {******************************************************************************}
-{*               Delphi example using the Builder pattern                     *}
+{*            Delphi example using the Factory Method pattern                 *}
 {******************************************************************************}
-program Builder;
+program FactoryMethod;
 
 {$APPTYPE CONSOLE}
 
@@ -10,9 +10,9 @@ program Builder;
 uses
   System.SysUtils,
   WinApi.Windows,
-  Vehicle in 'Vehicle.pas',
-  VehicleBuilders in 'VehicleBuilders.pas',
-  BuildShop in 'BuildShop.pas';
+  System.Generics.Collections,
+  Pages in 'Pages.pas',
+  Documents in 'Documents.pas';
 
 type
   PConsoleFontInfoEx = ^TConsoleFontInfoEx;
@@ -71,29 +71,21 @@ begin
   FEvent := CreateEvent(nil, TRUe, FALSE, nil);
   try
     try
-      var LBuilder: TVehicleBuilder := nil;
-      LBuilder := TMotorcycleBuilder.Create;
+      var LDocuments := TObjectList<TDocument>.Create(TRUE);
       try
-        TBuildShop.Construct(LBuilder);
-        LBuilder.Vehicle.Show;
+        LDocuments.Add(TResume.Create);
+        LDocuments.Add(TReport.Create);
+        for var LDocument: TDocument in LDocuments do
+        begin
+          WriteLn(String.Empty);
+          WriteLn(LDocument.ClassName, '--');
+          for var LPage: TPage in LDocument.Pages do
+          begin
+            WriteLn(' ', LPage.ClassName);
+          end;
+        end;
       finally
-        LBuilder.Free;
-      end;
-
-      LBuilder := TCarBuilder.Create;
-      try
-        TBuildShop.Construct(LBuilder);
-        LBuilder.Vehicle.Show;
-      finally
-        LBuilder.Free;
-      end;
-
-      LBuilder := TScooterBuilder.Create;
-      try
-        TBuildShop.Construct(LBuilder);
-        LBuilder.Vehicle.Show;
-      finally
-        LBuilder.Free;
+        LDocuments.Free;
       end;
     except
       on E: Exception do

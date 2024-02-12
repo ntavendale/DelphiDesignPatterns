@@ -12,6 +12,9 @@
         <Projects Include="Builder\Builder.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="FactoryMethod\FactoryMethod.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="Builder:Make">
         <MSBuild Projects="Builder\Builder.dproj" Targets="Make"/>
     </Target>
+    <Target Name="FactoryMethod">
+        <MSBuild Projects="FactoryMethod\FactoryMethod.dproj"/>
+    </Target>
+    <Target Name="FactoryMethod:Clean">
+        <MSBuild Projects="FactoryMethod\FactoryMethod.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FactoryMethod:Make">
+        <MSBuild Projects="FactoryMethod\FactoryMethod.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="decorator;AbstractFactory;Builder"/>
+        <CallTarget Targets="decorator;AbstractFactory;Builder;FactoryMethod"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean"/>
+        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean;FactoryMethod:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make"/>
+        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make;FactoryMethod:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
