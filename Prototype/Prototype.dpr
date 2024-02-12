@@ -1,7 +1,7 @@
 {******************************************************************************}
-{*            Delphi example using the Factory Method pattern                 *}
+{*               Delphi example using the Prototype pattern                   *}
 {******************************************************************************}
-program FactoryMethod;
+program Prototype;
 
 {$APPTYPE CONSOLE}
 
@@ -10,9 +10,8 @@ program FactoryMethod;
 uses
   System.SysUtils,
   WinApi.Windows,
-  System.Generics.Collections,
-  Pages in 'Pages.pas',
-  Documents in 'Documents.pas';
+  Colors in 'Colors.pas',
+  ColorManager in 'ColorManager.pas';
 
 type
   PConsoleFontInfoEx = ^TConsoleFontInfoEx;
@@ -71,21 +70,24 @@ begin
   FEvent := CreateEvent(nil, TRUE, FALSE, nil);
   try
     try
-      var LDocuments := TObjectList<TDocument>.Create(TRUE);
+      var LColorManager := TColorManager.Create;
       try
-        LDocuments.Add(TResume.Create);
-        LDocuments.Add(TReport.Create);
-        for var LDocument: TDocument in LDocuments do
-        begin
-          WriteLn(String.Empty);
-          WriteLn(LDocument.ClassName, '--');
-          for var LPage: TPage in LDocument.Pages do
-          begin
-            WriteLn(' ', LPage.ClassName);
-          end;
-        end;
+        LColorManager['red'] := TProductionColor.Create(255, 0, 0);
+        LColorManager['green'] := TProductionColor.Create(0, 255, 0);
+        LColorManager['blue'] := TProductionColor.Create(0, 0, 255);
+
+        LColorManager['angry'] := TProductionColor.Create(255, 54, 0);
+        LColorManager['peace'] := TProductionColor.Create(128, 211, 128);
+        LColorManager['flame'] := TProductionColor.Create(211, 34, 20);
+
+        var LColor := LColorManager['red'].Clone as TProductionColor;
+        LColor.Free;
+        LColor := LColorManager['peace'].Clone as TProductionColor;
+        LColor.Free;
+        LColor := LColorManager['flame'].Clone as TProductionColor;
+        LColor.Free;
       finally
-        LDocuments.Free;
+        LColorManager.Free;
       end;
     except
       on E: Exception do
