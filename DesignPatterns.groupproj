@@ -24,6 +24,9 @@
         <Projects Include="Adapter\Adapter.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Bridge\Bridge.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -95,14 +98,23 @@
     <Target Name="Adapter:Make">
         <MSBuild Projects="Adapter\Adapter.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Bridge">
+        <MSBuild Projects="Bridge\Bridge.dproj"/>
+    </Target>
+    <Target Name="Bridge:Clean">
+        <MSBuild Projects="Bridge\Bridge.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Bridge:Make">
+        <MSBuild Projects="Bridge\Bridge.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="decorator;AbstractFactory;Builder;FactoryMethod;Prototype;Singleton;Adapter"/>
+        <CallTarget Targets="decorator;AbstractFactory;Builder;FactoryMethod;Prototype;Singleton;Adapter;Bridge"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean;FactoryMethod:Clean;Prototype:Clean;Singleton:Clean;Adapter:Clean"/>
+        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean;FactoryMethod:Clean;Prototype:Clean;Singleton:Clean;Adapter:Clean;Bridge:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make;FactoryMethod:Make;Prototype:Make;Singleton:Make;Adapter:Make"/>
+        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make;FactoryMethod:Make;Prototype:Make;Singleton:Make;Adapter:Make;Bridge:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
