@@ -1,11 +1,11 @@
 {******************************************************************************}
-{*              Delphi example using the Decorator pattern                    *}
+{*                Delphi example using the Facade pattern                     *}
 {*                                                                            *}
-{* The Decorator design pattern attaches additional responsibilities to an    *}
-{* object dynamically. This pattern provide a flexible alternative to         *}
-{* subclassing for extending functionality.                                   *}
+{* The Facade design pattern provides a unified interface to a set of         *}
+{* interfaces in a subsystem. This pattern defines a higher-level interface   *}
+{* that makes the subsystem easier to use.                                    *}
 {******************************************************************************}
-program decorator;
+program Facade;
 
 {$APPTYPE CONSOLE}
 
@@ -14,8 +14,8 @@ program decorator;
 uses
   System.SysUtils,
   WinApi.Windows,
-  LibraryItem in 'LibraryItem.pas',
-  Borrowable in 'Borrowable.pas';
+  Subsystems in 'Subsystems.pas',
+  Mortgage in 'Mortgage.pas';
 
 type
   PConsoleFontInfoEx = ^TConsoleFontInfoEx;
@@ -71,32 +71,19 @@ end;
 begin
   SetUpConsole(20);
   SetConsoleCtrlHandler(@ConsoleEventProc, True);
-  FEvent := CreateEvent(nil, TRUe, FALSE, nil);
+  FEvent := CreateEvent(nil, TRUE, FALSE, nil);
   try
     try
-      var LBook := TLibraryBook.Create('Magni', 'Delphi GUI Programming with FireMonkey', 10);
+      { TODO -oUser -cConsole Main : Insert code here }
+      var LMortgage := TMortgage.Create;
       try
-        LBook.Display();
+        var LCustomer := TCustomer.Create('Ann McKinsey');
+        if LMortgage.IsEligible(LCustomer, 125000) then
+          WriteLn(sLineBreak, LCustomer.Name,' has been approved.')
+        else
+          WriteLn(sLineBreak, LCustomer.Name,' has been rejected.');
       finally
-        LBook.Free;
-      end;
-
-      // Create BluRay
-      var LBluRay := TBluRay.Create('Spielberg', 'Jaws', 23, 92);
-      try
-        LBluRay.Display();
-
-        // Make BluRay Borrowable
-        var LBorrowableBluRay := TBorrowable.Create(LBluRay, FALSE);
-        try
-          LBorrowableBluRay.BorrowItem('Customer #1');
-          LBorrowableBluRay.BorrowItem('Customer #2');
-          LBorrowableBluRay.Display;
-        finally
-          LBorrowableBluRay.Free;
-        end;
-      finally
-        LBluRay.Free;
+        LMortgage.Free;
       end;
     except
       on E: Exception do
@@ -104,6 +91,6 @@ begin
     end;
     WaitForSingleObject(FEvent, INFINITE);
   finally
-    CloseHandle(FEvent);
+    Closehandle(FEvent);
   end;
 end.
