@@ -33,6 +33,9 @@
         <Projects Include="Facade\Facade.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Flyweight\Flyweight.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +134,23 @@
     <Target Name="Facade:Make">
         <MSBuild Projects="Facade\Facade.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Flyweight">
+        <MSBuild Projects="Flyweight\Flyweight.dproj"/>
+    </Target>
+    <Target Name="Flyweight:Clean">
+        <MSBuild Projects="Flyweight\Flyweight.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Flyweight:Make">
+        <MSBuild Projects="Flyweight\Flyweight.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="decorator;AbstractFactory;Builder;FactoryMethod;Prototype;Singleton;Adapter;Bridge;Composite;Facade"/>
+        <CallTarget Targets="decorator;AbstractFactory;Builder;FactoryMethod;Prototype;Singleton;Adapter;Bridge;Composite;Facade;Flyweight"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean;FactoryMethod:Clean;Prototype:Clean;Singleton:Clean;Adapter:Clean;Bridge:Clean;Composite:Clean;Facade:Clean"/>
+        <CallTarget Targets="decorator:Clean;AbstractFactory:Clean;Builder:Clean;FactoryMethod:Clean;Prototype:Clean;Singleton:Clean;Adapter:Clean;Bridge:Clean;Composite:Clean;Facade:Clean;Flyweight:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make;FactoryMethod:Make;Prototype:Make;Singleton:Make;Adapter:Make;Bridge:Make;Composite:Make;Facade:Make"/>
+        <CallTarget Targets="decorator:Make;AbstractFactory:Make;Builder:Make;FactoryMethod:Make;Prototype:Make;Singleton:Make;Adapter:Make;Bridge:Make;Composite:Make;Facade:Make;Flyweight:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
